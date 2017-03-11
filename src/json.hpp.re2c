@@ -6969,6 +6969,7 @@ class basic_json
     {
         // assertion to check that the iterator range is indeed contiguous,
         // see http://stackoverflow.com/a/35008842/266378 for more discussion
+#ifndef NDEBUG
         const auto is_contiguous = [&]()
         {
             bool test = true;
@@ -6979,6 +6980,7 @@ class basic_json
             }
             return test;
         };
+#endif
         assert(is_contiguous());
 
         // assertion to check that each element is 1 byte long
