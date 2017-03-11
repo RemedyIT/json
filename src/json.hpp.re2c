@@ -6969,12 +6969,17 @@ class basic_json
     {
         // assertion to check that the iterator range is indeed contiguous,
         // see http://stackoverflow.com/a/35008842/266378 for more discussion
-        assert(std::accumulate(first, last, std::pair<bool, int>(true, 0),
-                               [&first](std::pair<bool, int> res, decltype(*first) val)
+        const auto is_contiguous = [&]()
         {
-            res.first &= (val == *(std::next(std::addressof(*first), res.second++)));
-            return res;
-        }).first);
+            bool test = true;
+            const auto n = std::distance(first, last);
+            for (int i = 0; i < n and test; ++i)
+            {
+                test &= *(std::next(first, i)) == *(std::next(std::addressof(*first), i));
+            }
+            return test;
+        };
+        assert(is_contiguous());
 
         // assertion to check that each element is 1 byte long
         static_assert(sizeof(typename std::iterator_traits<IteratorType>::value_type) == 1,
