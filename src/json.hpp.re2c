@@ -9834,7 +9834,7 @@ class basic_json
                     quotation_mark  = "\"";
                     alt_quotation_mark  = "'";
                     escape          = "\\";
-                    unescaped       = [^"\\\x00-\x1f];
+                    unescaped       = [^'"\\\x00-\x1f];
                     single_escaped  = "\"" | "'" | "\\" | "/" | "b" | "f" | "n" | "r" | "t";
                     unicode_escaped = "u" [0-9a-fA-F]{4};
                     escaped         = escape (single_escaped | unicode_escaped);
